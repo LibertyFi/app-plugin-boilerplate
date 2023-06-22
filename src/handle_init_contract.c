@@ -1,6 +1,7 @@
 #include "boilerplate_plugin.h"
 
-static int find_selector(uint32_t selector, const uint32_t *selectors, size_t n, selector_t *out) {
+static int find_selector(uint32_t selector, const uint32_t *selectors, size_t n, selector_t *out)
+{
     for (selector_t i = 0; i < n; i++) {
         if (selector == selectors[i]) {
             *out = i;
@@ -11,8 +12,10 @@ static int find_selector(uint32_t selector, const uint32_t *selectors, size_t n,
 }
 
 // Called once to init.
-void handle_init_contract(void *parameters) {
-    // Cast the msg to the type of structure we expect (here, ethPluginInitContract_t).
+void handle_init_contract(void *parameters)
+{
+    // Cast the msg to the type of structure we expect (here,
+    // ethPluginInitContract_t).
     ethPluginInitContract_t *msg = (ethPluginInitContract_t *) parameters;
 
     // Make sure we are running a compatible version.
@@ -22,8 +25,8 @@ void handle_init_contract(void *parameters) {
         return;
     }
 
-    // Double check that the `context_t` struct is not bigger than the maximum size (defined by
-    // `msg->pluginContextLength`).
+    // Double check that the `context_t` struct is not bigger than the maximum
+    // size (defined by `msg->pluginContextLength`).
     if (msg->pluginContextLength < sizeof(context_t)) {
         PRINTF("Plugin parameters structure is bigger than allowed size\n");
         msg->result = ETH_PLUGIN_RESULT_ERROR;
@@ -42,8 +45,8 @@ void handle_init_contract(void *parameters) {
     }
 
     // Set `next_param` to be the first field we expect to parse.
-    // EDIT THIS: Adapt the `cases`, and set the `next_param` to be the first parameter you expect
-    // to parse.
+    // EDIT THIS: Adapt the `cases`, and set the `next_param` to be the first
+    // parameter you expect to parse.
     switch (context->selectorIndex) {
         case SWAP_EXACT_ETH_FOR_TOKENS:
             context->next_param = MIN_AMOUNT_RECEIVED;

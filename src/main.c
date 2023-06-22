@@ -19,28 +19,28 @@
 #include <stdint.h>
 #include <string.h>
 
-#include "os.h"
-#include "cx.h"
-
-#include "glyphs.h"
-
 #include "boilerplate_plugin.h"
+#include "cx.h"
+#include "glyphs.h"
+#include "os.h"
 
 // List of selectors supported by this plugin.
-// EDIT THIS: Adapt the variable names and change the `0x` values to match your selectors.
+// EDIT THIS: Adapt the variable names and change the `0x` values to match your
+// selectors.
 static const uint32_t SWAP_EXACT_ETH_FOR_TOKENS_SELECTOR = 0x7ff36ab5;
 static const uint32_t BOILERPLATE_DUMMY_SELECTOR_2 = 0x13374242;
 
-// Array of all the different boilerplate selectors. Make sure this follows the same order as the
-// enum defined in `boilerplate_plugin.h`
-// EDIT THIS: Use the names of the array declared above.
+// Array of all the different boilerplate selectors. Make sure this follows the
+// same order as the enum defined in `boilerplate_plugin.h` EDIT THIS: Use the
+// names of the array declared above.
 const uint32_t BOILERPLATE_SELECTORS[NUM_SELECTORS] = {
     SWAP_EXACT_ETH_FOR_TOKENS_SELECTOR,
     BOILERPLATE_DUMMY_SELECTOR_2,
 };
 
 // Function to dispatch calls from the ethereum app.
-void dispatch_plugin_calls(int message, void *parameters) {
+void dispatch_plugin_calls(int message, void *parameters)
+{
     switch (message) {
         case ETH_PLUGIN_INIT_CONTRACT:
             handle_init_contract(parameters);
@@ -66,7 +66,8 @@ void dispatch_plugin_calls(int message, void *parameters) {
     }
 }
 
-void handle_query_ui_exception(unsigned int *args) {
+void handle_query_ui_exception(unsigned int *args)
+{
     switch (args[0]) {
         case ETH_PLUGIN_QUERY_CONTRACT_UI:
             ((ethQueryContractUI_t *) args[1])->result = ETH_PLUGIN_RESULT_ERROR;
@@ -77,7 +78,8 @@ void handle_query_ui_exception(unsigned int *args) {
 }
 
 // Calls the ethereum app.
-void call_app_ethereum() {
+void call_app_ethereum()
+{
     unsigned int libcall_params[5];
     libcall_params[0] = (unsigned int) "Ethereum";
     libcall_params[1] = 0x100;
@@ -102,16 +104,20 @@ void call_app_ethereum() {
 }
 
 // Weird low-level black magic. No need to edit this.
-__attribute__((section(".boot"))) int main(int arg0) {
+__attribute__((section(".boot"))) int main(int arg0)
+{
     // Exit critical section
     __asm volatile("cpsie i");
 
     // Ensure exception will work as planned
     os_boot();
 
-    // Try catch block. Please read the docs for more information on how to use those!
-    BEGIN_TRY {
-        TRY {
+    // Try catch block. Please read the docs for more information on how to use
+    // those!
+    BEGIN_TRY
+    {
+        TRY
+        {
             // Low-level black magic.
             check_api_level(CX_COMPAT_APILEVEL);
 
@@ -124,14 +130,16 @@ __attribute__((section(".boot"))) int main(int arg0) {
                 // Not called from dashboard: called from the ethereum app!
                 const unsigned int *args = (const unsigned int *) arg0;
 
-                // If `ETH_PLUGIN_CHECK_PRESENCE` is set, this means the caller is just trying to
-                // know whether this app exists or not. We can skip `dispatch_plugin_calls`.
+                // If `ETH_PLUGIN_CHECK_PRESENCE` is set, this means the caller is
+                // just trying to know whether this app exists or not. We can skip
+                // `dispatch_plugin_calls`.
                 if (args[0] != ETH_PLUGIN_CHECK_PRESENCE) {
                     dispatch_plugin_calls(args[0], (void *) args[1]);
                 }
             }
         }
-        CATCH_OTHER(e) {
+        CATCH_OTHER(e)
+        {
             switch (e) {
                 // These exceptions are only generated on handle_query_contract_ui()
                 case 0x6502:
@@ -143,7 +151,8 @@ __attribute__((section(".boot"))) int main(int arg0) {
             }
             PRINTF("Exception 0x%x caught\n", e);
         }
-        FINALLY {
+        FINALLY
+        {
             // Call `os_lib_end`, go back to the ethereum app.
             os_lib_end();
         }
