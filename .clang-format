@@ -8,7 +8,7 @@ PointerAlignment: Right
 AlignAfterOpenBracket: Align
 AlignConsecutiveMacros: true
 AllowAllParametersOfDeclarationOnNextLine: false
-SortIncludes: false
+SortIncludes: true
 SpaceAfterCStyleCast: true
 AllowShortCaseLabelsOnASingleLine: false
 AllowAllArgumentsOnNextLine: false
@@ -17,4 +17,5 @@ AllowShortBlocksOnASingleLine: Never
 AllowShortFunctionsOnASingleLine: None
 BinPackArguments: false
 BinPackParameters: false
+BreakBeforeBraces: Linux
 ---
