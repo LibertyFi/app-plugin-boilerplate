@@ -2,14 +2,13 @@
     "chainId": 1,
     "contracts": [
         {
-            "address": "0x7a250d5630b4cf539739df2c5dacb4c659f2488d",
-            "contractName": "UniswapV2",
+            "address": "0x429032a407aed3d5ff84caf38eff217eb4d322a9",
+            "contractName": "LibertiVault",
             "selectors": {
-                "0x7ff36ab5": {
+                "0x3b086d4d": {
                     "erc20OfInterest": [
-                        "path.1"
                     ],
-                    "method": "swapExactETHForTokens",
+                    "method": "depositEth",
                     "plugin": "Boilerplate"
 		        }
 	        }

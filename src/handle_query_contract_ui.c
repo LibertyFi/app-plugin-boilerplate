@@ -5,9 +5,9 @@
 
 // Set UI for the "Send" screen.
 // EDIT THIS: Adapt / remove this function to your needs.
-static void set_send_ui(ethQueryContractUI_t *msg)
+static void set_deposit_ui(ethQueryContractUI_t *msg)
 {
-    strlcpy(msg->title, "Send", msg->titleLength);
+    strlcpy(msg->title, "Deposit ETH", msg->titleLength);
 
     const uint8_t *eth_amount = msg->pluginSharedRO->txContent->value.value;
     uint8_t eth_amount_size = msg->pluginSharedRO->txContent->value.length;
@@ -17,35 +17,11 @@ static void set_send_ui(ethQueryContractUI_t *msg)
     amountToString(eth_amount, eth_amount_size, WEI_TO_ETHER, "ETH", msg->msg, msg->msgLength);
 }
 
-// Set UI for "Receive" screen.
-// EDIT THIS: Adapt / remove this function to your needs.
-static void set_receive_ui(ethQueryContractUI_t *msg, const context_t *context)
-{
-    strlcpy(msg->title, "Receive Min.", msg->titleLength);
-
-    uint8_t decimals = context->decimals;
-    const char *ticker = context->ticker;
-
-    // If the token look up failed, use the default network ticker along with the
-    // default decimals.
-    if (!context->token_found) {
-        decimals = WEI_TO_ETHER;
-        ticker = msg->network_ticker;
-    }
-
-    amountToString(context->amount_received,
-                   sizeof(context->amount_received),
-                   decimals,
-                   ticker,
-                   msg->msg,
-                   msg->msgLength);
-}
-
 // Set UI for "Beneficiary" screen.
 // EDIT THIS: Adapt / remove this function to your needs.
-static void set_beneficiary_ui(ethQueryContractUI_t *msg, context_t *context)
+static void set_receiver_ui(ethQueryContractUI_t *msg, context_t *context)
 {
-    strlcpy(msg->title, "Beneficiary", msg->titleLength);
+    strlcpy(msg->title, "Receiver", msg->titleLength);
 
     // Prefix the address with `0x`.
     msg->msg[0] = '0';
@@ -59,10 +35,13 @@ static void set_beneficiary_ui(ethQueryContractUI_t *msg, context_t *context)
     // Get the string representation of the address stored in
     // `context->beneficiary`. Put it in `msg->msg`.
     getEthAddressStringFromBinary(
-        context->beneficiary,
+        context->receiver,
         msg->msg + 2,  // +2 here because we've already prefixed with '0x'.
         msg->pluginSharedRW->sha3,
         chainid);
+    /* strcpy(&msg->msg[6], ".."); */
+    /* strncpy(&msg->msg[8], &msg->msg[16], 4); */
+    /* msg->msg[12] = '\0'; */
 }
 
 void handle_query_contract_ui(void *parameters)
@@ -82,13 +61,10 @@ void handle_query_contract_ui(void *parameters)
     // EDIT THIS: Adapt the cases for the screens you'd like to display.
     switch (msg->screenIndex) {
         case 0:
-            set_send_ui(msg);
+            set_deposit_ui(msg);
             break;
         case 1:
-            set_receive_ui(msg, context);
-            break;
-        case 2:
-            set_beneficiary_ui(msg, context);
+            set_receiver_ui(msg, context);
             break;
         // Keep this
         default:

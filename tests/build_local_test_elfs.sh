@@ -4,7 +4,8 @@
 NANOS_SDK=$NANOS_SDK
 NANOSP_SDK=$NANOSP_SDK
 NANOX_SDK=$NANOX_SDK
-APP_ETHEREUM=${APP_ETHEREUM:-"/plugin_dev/app-ethereum"}
+# docker run --rm -ti --user "$(id -u):$(id -g)" --privileged -v "/dev/bus/usb:/dev/bus/usb" -v "$(realpath .):/app" ghcr.io/ledgerhq/ledger-app-builder/ledger-app-dev-tools:3.1.0
+APP_ETHEREUM=${APP_ETHEREUM:-"/app/app-ethereum"}
 
 set -e
 

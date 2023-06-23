@@ -24,19 +24,14 @@
 #include "glyphs.h"
 #include "os.h"
 
-// List of selectors supported by this plugin.
-// EDIT THIS: Adapt the variable names and change the `0x` values to match your
-// selectors.
-static const uint32_t SWAP_EXACT_ETH_FOR_TOKENS_SELECTOR = 0x7ff36ab5;
-static const uint32_t BOILERPLATE_DUMMY_SELECTOR_2 = 0x13374242;
+// Function: depositEth(address receiver,bytes data)
+// MethodID: 0x3b086d4d
+static const uint32_t DEPOSIT_ETH_SELECTOR = 0x3b086d4d;
 
 // Array of all the different boilerplate selectors. Make sure this follows the
 // same order as the enum defined in `boilerplate_plugin.h` EDIT THIS: Use the
 // names of the array declared above.
-const uint32_t BOILERPLATE_SELECTORS[NUM_SELECTORS] = {
-    SWAP_EXACT_ETH_FOR_TOKENS_SELECTOR,
-    BOILERPLATE_DUMMY_SELECTOR_2,
-};
+const uint32_t BOILERPLATE_SELECTORS[NUM_SELECTORS] = {DEPOSIT_ETH_SELECTOR};
 
 // Function to dispatch calls from the ethereum app.
 void dispatch_plugin_calls(int message, void *parameters)
