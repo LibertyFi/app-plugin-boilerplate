@@ -28,10 +28,14 @@
 // MethodID: 0x3b086d4d
 static const uint32_t DEPOSIT_ETH_SELECTOR = 0x3b086d4d;
 
+// Function: redeemEth(uint256 shares,address receiver,address _owner,bytes data)
+// MethodID: 0xd24febcd
+static const uint32_t REDEEM_ETH_SELECTOR = 0xd24febcd;
+
 // Array of all the different boilerplate selectors. Make sure this follows the
 // same order as the enum defined in `boilerplate_plugin.h` EDIT THIS: Use the
 // names of the array declared above.
-const uint32_t BOILERPLATE_SELECTORS[NUM_SELECTORS] = {DEPOSIT_ETH_SELECTOR};
+const uint32_t BOILERPLATE_SELECTORS[NUM_SELECTORS] = {DEPOSIT_ETH_SELECTOR, REDEEM_ETH_SELECTOR};
 
 // Function to dispatch calls from the ethereum app.
 void dispatch_plugin_calls(int message, void *parameters)

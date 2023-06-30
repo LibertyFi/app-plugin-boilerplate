@@ -16,10 +16,10 @@ const abi = require(abi_path);
 // EDIT THIS: build your own test
 nano_models.forEach(function(model) {
   jest.setTimeout(20000)
-  test('[Nano ' + model.letter + '] Deposit Eth', zemu(model, async (sim, eth) => {
+  test('[Nano ' + model.letter + '] Redeem Eth', zemu(model, async (sim, eth) => {
 
   // The rawTx of the tx up above is accessible through: https://etherscan.io/getRawTx?tx=0xb27a69cd3190ad0712da39f6b809ecc019ecbc319d3c17169853270226d18a8a
-  const serializedTx = txFromEtherscan("0x02f8d9018085080c5fe7f885080c5fe7f883051a3294091630cd519791253ca0c54f69a7888ffed425878714d71d397e9e8ab8643b086d4d00000000000000000000000042775bc7fb67c10618da0a3c2c6cb068d027608300000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000000c001a052f69e568eae899911d7f8b583b2a634ea48bcdc8588b3ecf1cf77343cc9c30ba069eb714050a42b7b21e975c2c88f93555240c47c2eba763aaed316da776a85bc");
+  const serializedTx = txFromEtherscan("0x02f901120101850846a28e54850846a28e5483024f5e94091630cd519791253ca0c54f69a7888ffed4258780b8a4d24febcd0000000000000000000000000000000000000000000000000ddd2935029d800000000000000000000000000042775bc7fb67c10618da0a3c2c6cb068d027608300000000000000000000000042775bc7fb67c10618da0a3c2c6cb068d027608300000000000000000000000000000000000000000000000000000000000000800000000000000000000000000000000000000000000000000000000000000000c001a08c5bb6e6948a698ffc9c5be5a042593c8d218208fbc8f9e2628f44584dd9d31ba02b56c43afa56002aedf335233403d84fdc359c7e3ec8f6d82ad3952723b13698");
 
   const tx = eth.signTransaction(
     "44'/60'/0'/0",
@@ -27,12 +27,12 @@ nano_models.forEach(function(model) {
   );
 
       //const right_clicks = model.letter === 'S' ? 12 : 6;
-      const right_clicks = model.letter === 'S' ? 11 : 5;
+      const right_clicks = model.letter === 'S' ? 12 : 7;
 
   // Wait for the application to actually load and parse the transaction
   await waitForAppScreen(sim);
   // Navigate the display by pressing the right button `right_clicks` times, then pressing both buttons to accept the transaction.
-  await sim.navigateAndCompareSnapshots('.', model.name + '_deposit_eth', [right_clicks, 0]);
+  await sim.navigateAndCompareSnapshots('.', model.name + '_redeem_eth', [right_clicks, 0]);
 
   await tx;
   }));

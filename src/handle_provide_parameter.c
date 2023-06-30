@@ -28,6 +28,42 @@ static void handle_deposit(ethPluginProvideParameter_t *msg, context_t *context)
     }
 }
 
+static void handle_redeem_eth(ethPluginProvideParameter_t *msg, context_t *context)
+{
+    if (context->go_to_offset) {
+        if (msg->parameterOffset != context->offset + SELECTOR_SIZE) {
+            return;
+        }
+        context->go_to_offset = false;
+    }
+    switch (context->next_param) {
+        case SHARES:
+        sizeof(context->shares);
+        copy_parameter(context->shares, msg->parameter, sizeof(context->shares));
+        context->next_param = RECEIVER;
+        break;
+        case RECEIVER:
+            copy_address(context->receiver, msg->parameter, sizeof(context->receiver));
+            context->next_param = OWNER;
+            break;
+        case OWNER:
+            copy_address(context->owner, msg->parameter, sizeof(context->owner));
+            context->next_param = DATA_OFFSET;
+            break;
+        case DATA_OFFSET:
+            context->next_param = DATA_LENGTH;
+            break;
+        case DATA_LENGTH:
+            context->next_param = UNEXPECTED_PARAMETER;
+            break;
+        // Keep this
+        default:
+            PRINTF("Param not supported: %d\n", context->next_param);
+            msg->result = ETH_PLUGIN_RESULT_ERROR;
+            break;
+    }
+}
+
 void handle_provide_parameter(void *parameters)
 {
     ethPluginProvideParameter_t *msg = (ethPluginProvideParameter_t *) parameters;
@@ -46,6 +82,9 @@ void handle_provide_parameter(void *parameters)
     switch (context->selectorIndex) {
         case DEPOSIT_ETH:
             handle_deposit(msg, context);
+            break;
+        case REDEEM_ETH:
+            handle_redeem_eth(msg, context);
             break;
         default:
             PRINTF("Selector Index not supported: %d\n", context->selectorIndex);

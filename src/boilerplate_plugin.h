@@ -8,7 +8,7 @@
 // Number of selectors defined in this plugin. Should match the enum
 // `selector_t`. EDIT THIS: Put in the number of selectors your plugin is going
 // to support.
-#define NUM_SELECTORS 1
+#define NUM_SELECTORS 2
 
 // Name of the plugin.
 // EDIT THIS: Replace with your plugin name.
@@ -17,16 +17,23 @@
 // Enumeration of the different selectors possible.
 // Should follow the exact same order as the array declared in main.c
 // EDIT THIS: Change the naming (`selector_t`), and add your selector names.
-typedef enum {
-    DEPOSIT_ETH = 0
-} selector_t;
+typedef enum { DEPOSIT_ETH = 0, REDEEM_ETH } selector_t;
 
 // Enumeration used to parse the smart contract data.
 // EDIT THIS: Adapt the parameter names here.
 typedef enum {
+    // Function: depositEth(address receiver,bytes data)
     RECEIVER = 0,
     DATA_OFFSET,
     DATA_LENGTH,
+
+    // Function: redeemEth(uint256 shares,address receiver,address _owner,bytes data)
+    SHARES,
+    // RECEIVER,
+    OWNER,
+    // DATA_OFFSET,
+    // DATA_LENGTH,
+
     UNEXPECTED_PARAMETER,
 } parameter;
 
@@ -39,7 +46,10 @@ extern const uint32_t BOILERPLATE_SELECTORS[NUM_SELECTORS];
 // parse. You will need to adapt this struct to your plugin.
 typedef struct context_t {
     // For display.
+    uint8_t shares[INT256_LENGTH];
     uint8_t receiver[ADDRESS_LENGTH];
+    uint8_t owner[ADDRESS_LENGTH];
+
     char ticker[MAX_TICKER_LEN];
     uint8_t decimals;
     uint8_t token_found;

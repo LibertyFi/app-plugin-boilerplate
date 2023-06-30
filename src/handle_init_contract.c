@@ -51,6 +51,9 @@ void handle_init_contract(void *parameters)
         case DEPOSIT_ETH:
             context->next_param = RECEIVER;
             break;
+        case REDEEM_ETH:
+            context->next_param = SHARES;
+            break;
         // Keep this
         default:
             PRINTF("Missing selectorIndex: %d\n", context->selectorIndex);

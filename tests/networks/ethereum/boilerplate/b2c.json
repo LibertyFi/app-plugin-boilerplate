@@ -1,18 +1,20 @@
 {
-    "chainId": 1,
-    "contracts": [
-        {
-            "address": "0x429032a407aed3d5ff84caf38eff217eb4d322a9",
-            "contractName": "LibertiVault",
-            "selectors": {
-                "0x3b086d4d": {
-                    "erc20OfInterest": [
-                    ],
-                    "method": "depositEth",
-                    "plugin": "Boilerplate"
-		        }
-	        }
-	    }
-    ],
-    "name": "Boilerplate"
+	"chainId": 1,
+	"contracts": [{
+		"address": "0x091630cd519791253ca0c54f69a7888ffed42587",
+		"contractName": "LibertiVault",
+		"selectors": {
+			"0x3b086d4d": {
+				"erc20OfInterest": [],
+				"method": "depositEth",
+				"plugin": "Boilerplate"
+			},
+			"0xd24febcd": {
+				"erc20OfInterest": [],
+				"method": "redeemEth",
+				"plugin": "Boilerplate"
+			}
+		}
+	}],
+	"name": "Boilerplate"
 }

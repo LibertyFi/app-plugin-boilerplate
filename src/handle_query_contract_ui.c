@@ -44,6 +44,46 @@ static void set_receiver_ui(ethQueryContractUI_t *msg, context_t *context)
     /* msg->msg[12] = '\0'; */
 }
 
+static void set_address_ui(ethQueryContractUI_t *msg,
+                           /* context_t *context,  */ uint8_t *addr,
+                           const char *title)  // int shortened?
+{
+    strlcpy(msg->title, title, msg->titleLength);
+
+    // Prefix the address with `0x`.
+    msg->msg[0] = '0';
+    msg->msg[1] = 'x';
+
+    // We need a random chainID for legacy reasons with
+    // `getEthAddressStringFromBinary`. Setting it to `0` will make it work with
+    // every chainID :)
+    uint64_t chainid = 0;
+
+    // Get the string representation of the address stored in
+    // `context->beneficiary`. Put it in `msg->msg`.
+    getEthAddressStringFromBinary(
+        addr,          // context->receiver,
+        msg->msg + 2,  // +2 here because we've already prefixed with '0x'.
+        msg->pluginSharedRW->sha3,
+        chainid);
+
+    // if (shortened) { ...
+    /* strcpy(&msg->msg[6], ".."); */
+    /* strncpy(&msg->msg[8], &msg->msg[16], 4); */
+    /* msg->msg[12] = '\0'; */
+}
+
+static void set_shares_ui(ethQueryContractUI_t *msg, context_t *context)
+{
+    strlcpy(msg->title, "Shares", msg->titleLength);
+    amountToString(context->shares,
+                   sizeof(context->shares),
+                   WEI_TO_ETHER,
+                   "LP",
+                   msg->msg,
+                   msg->msgLength);
+}
+
 void handle_query_contract_ui(void *parameters)
 {
     ethQueryContractUI_t *msg = (ethQueryContractUI_t *) parameters;
@@ -58,18 +98,44 @@ void handle_query_contract_ui(void *parameters)
 
     msg->result = ETH_PLUGIN_RESULT_OK;
 
-    // EDIT THIS: Adapt the cases for the screens you'd like to display.
-    switch (msg->screenIndex) {
-        case 0:
-            set_deposit_ui(msg);
+    switch (context->selectorIndex) {
+        case DEPOSIT_ETH:
+            switch (msg->screenIndex) {
+                case 0:
+                    set_deposit_ui(msg);
+                    break;
+                case 1:
+                    set_receiver_ui(msg, context);
+                    break;
+                default:
+                    PRINTF("Received an invalid screenIndex\n");
+                    msg->result = ETH_PLUGIN_RESULT_ERROR;
+                    return;
+            }
             break;
-        case 1:
-            set_receiver_ui(msg, context);
+        case REDEEM_ETH:
+            switch (msg->screenIndex) {
+                case 0:
+                    set_shares_ui(msg, context);  // set_eth_value_ui(..., "shares", )
+                                                  // set_value_ui(msg, context->shares, "Shares");
+                    break;
+                case 1:
+                    // set_receiver_ui(msg, context);
+                    set_address_ui(msg, context->receiver, "Receiver");
+                    break;
+                case 2:
+                    // set_owner_ui(msg, context);
+                    set_address_ui(msg, context->owner, "Owner");
+                    break;
+                default:
+                    PRINTF("Received an invalid screenIndex\n");
+                    msg->result = ETH_PLUGIN_RESULT_ERROR;
+                    return;
+            }
             break;
-        // Keep this
         default:
-            PRINTF("Received an invalid screenIndex\n");
+            PRINTF("Selector Index not supported: %d\n", context->selectorIndex);
             msg->result = ETH_PLUGIN_RESULT_ERROR;
-            return;
+            break;
     }
 }

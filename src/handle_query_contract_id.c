@@ -12,11 +12,18 @@ void handle_query_contract_id(void *parameters)
     strlcpy(msg->name, "Libertify", msg->nameLength);
 
     // EDIT THIS: Adapt the cases by modifying the strings you pass to `strlcpy`.
-    if (context->selectorIndex == DEPOSIT_ETH) {
-        strlcpy(msg->version, "Deposit Eth", msg->versionLength);
-        msg->result = ETH_PLUGIN_RESULT_OK;
-    } else {
-        PRINTF("Selector index: %d not supported\n", context->selectorIndex);
-        msg->result = ETH_PLUGIN_RESULT_ERROR;
+
+    switch (context->selectorIndex) {
+        case DEPOSIT_ETH:
+            strlcpy(msg->version, "Deposit Eth", msg->versionLength);
+            msg->result = ETH_PLUGIN_RESULT_OK;
+            break;
+        case REDEEM_ETH:
+            strlcpy(msg->version, "Redeem Eth", msg->versionLength);
+            msg->result = ETH_PLUGIN_RESULT_OK;
+            break;
+        default:
+            PRINTF("Selector index: %d not supported\n", context->selectorIndex);
+            msg->result = ETH_PLUGIN_RESULT_ERROR;
     }
 }
