@@ -7,7 +7,7 @@ import { parseEther, parseUnits} from "ethers/lib/utils";
 // EDIT THIS: Replace with your contract address
 const contractAddr = "0x429032A407aed3D5fF84caf38EFF217eB4d322A9".toLowerCase();
 // EDIT THIS: Replace `boilerplate` with your plugin name
-const pluginName = "boilerplate";
+const pluginName = "libertify";
 const testNetwork = "ethereum";
 const abi_path = `../networks/${testNetwork}/${pluginName}/abis/` + contractAddr + '.json';
 const abi = require(abi_path);

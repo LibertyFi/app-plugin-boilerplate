@@ -7,14 +7,14 @@
 			"0x3b086d4d": {
 				"erc20OfInterest": [],
 				"method": "depositEth",
-				"plugin": "Boilerplate"
+				"plugin": "Libertify"
 			},
 			"0xd24febcd": {
 				"erc20OfInterest": [],
 				"method": "redeemEth",
-				"plugin": "Boilerplate"
+				"plugin": "Libertify"
 			}
 		}
 	}],
-	"name": "Boilerplate"
+	"name": "Libertify"
 }
