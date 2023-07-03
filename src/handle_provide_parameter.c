@@ -38,7 +38,6 @@ static void handle_redeem_eth(ethPluginProvideParameter_t *msg, context_t *conte
     }
     switch (context->next_param) {
         case SHARES:
-            sizeof(context->shares);
             copy_parameter(context->shares, msg->parameter, sizeof(context->shares));
             context->next_param = RECEIVER;
             break;
