@@ -1,4 +1,4 @@
-#include "boilerplate_plugin.h"
+#include "libertify_plugin.h"
 
 // EDIT THIS: Remove this function and write your own handlers!
 static void handle_deposit(ethPluginProvideParameter_t *msg, context_t *context)
@@ -38,10 +38,10 @@ static void handle_redeem_eth(ethPluginProvideParameter_t *msg, context_t *conte
     }
     switch (context->next_param) {
         case SHARES:
-        sizeof(context->shares);
-        copy_parameter(context->shares, msg->parameter, sizeof(context->shares));
-        context->next_param = RECEIVER;
-        break;
+            sizeof(context->shares);
+            copy_parameter(context->shares, msg->parameter, sizeof(context->shares));
+            context->next_param = RECEIVER;
+            break;
         case RECEIVER:
             copy_address(context->receiver, msg->parameter, sizeof(context->receiver));
             context->next_param = OWNER;

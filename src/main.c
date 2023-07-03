@@ -19,9 +19,9 @@
 #include <stdint.h>
 #include <string.h>
 
-#include "boilerplate_plugin.h"
 #include "cx.h"
 #include "glyphs.h"
+#include "libertify_plugin.h"
 #include "os.h"
 
 // Function: depositEth(address receiver,bytes data)
