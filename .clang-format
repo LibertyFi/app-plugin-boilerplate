@@ -18,4 +18,5 @@ AllowShortFunctionsOnASingleLine: None
 BinPackArguments: false
 BinPackParameters: false
 BreakBeforeBraces: Linux
+SeparateDefinitionBlocks: Always
 ---
