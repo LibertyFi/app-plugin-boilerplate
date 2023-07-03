@@ -84,6 +84,17 @@ static void set_shares_ui(ethQueryContractUI_t *msg, context_t *context)
                    msg->msgLength);
 }
 
+static void set_assets_ui(ethQueryContractUI_t *msg, context_t *context)
+{
+    strlcpy(msg->title, "Assets", msg->titleLength);
+    amountToString(context->assets,
+                   sizeof(context->assets),
+                   WEI_TO_ETHER,
+                   "??",
+                   msg->msg,
+                   msg->msgLength);
+}
+
 void handle_query_contract_ui(void *parameters)
 {
     ethQueryContractUI_t *msg = (ethQueryContractUI_t *) parameters;
@@ -126,6 +137,20 @@ void handle_query_contract_ui(void *parameters)
                 case 2:
                     // set_owner_ui(msg, context);
                     set_address_ui(msg, context->owner, "Owner");
+                    break;
+                default:
+                    PRINTF("Received an invalid screenIndex\n");
+                    msg->result = ETH_PLUGIN_RESULT_ERROR;
+                    return;
+            }
+            break;
+        case DEPOSIT:
+            switch (msg->screenIndex) {
+                case 0:
+                    set_assets_ui(msg, context);
+                    break;
+                case 1:
+                    set_address_ui(msg, context->receiver, "Receiver");
                     break;
                 default:
                     PRINTF("Received an invalid screenIndex\n");

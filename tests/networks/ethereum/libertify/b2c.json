@@ -1,20 +1,33 @@
+
 {
 	"chainId": 1,
 	"contracts": [{
-		"address": "0x091630cd519791253ca0c54f69a7888ffed42587",
-		"contractName": "LibertiVault",
-		"selectors": {
-			"0x3b086d4d": {
-				"erc20OfInterest": [],
-				"method": "depositEth",
-				"plugin": "Libertify"
-			},
-			"0xd24febcd": {
-				"erc20OfInterest": [],
-				"method": "redeemEth",
-				"plugin": "Libertify"
+			"address": "0x091630cd519791253ca0c54f69a7888ffed42587",
+			"contractName": "LibertiVault",
+			"selectors": {
+				"0x3b086d4d": {
+					"erc20OfInterest": [],
+					"method": "depositEth",
+					"plugin": "Libertify"
+				},
+				"0xd24febcd": {
+					"erc20OfInterest": [],
+					"method": "redeemEth",
+					"plugin": "Libertify"
+				}
+			}
+		},
+		{
+			"address": "0xa642dae67eeddbf43ebc949e4ff9136da96fcde7",
+			"contractName": "LibertiVault",
+			"selectors": {
+				"0xfaa9bce9": {
+					"erc20OfInterest": [],
+					"method": "deposit",
+					"plugin": "Libertify"
+				}
 			}
 		}
-	}],
+	],
 	"name": "Libertify"
 }
