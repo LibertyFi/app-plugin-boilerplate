@@ -18,7 +18,7 @@ static void handle_deposit(ethPluginProvideParameter_t *msg, context_t *context)
             context->next_param = ASSETS;
             break;
         case ASSETS:
-             copy_parameter(context->assets, msg->parameter, sizeof(context->assets));
+            copy_parameter(context->assets, msg->parameter, sizeof(context->assets));
             context->next_param = DATA_OFFSET;
             break;
         case DATA_OFFSET:
@@ -33,7 +33,6 @@ static void handle_deposit(ethPluginProvideParameter_t *msg, context_t *context)
             break;
     }
 }
-
 
 void handle_provide_parameter(void *parameters)
 {

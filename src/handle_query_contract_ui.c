@@ -1,8 +1,5 @@
 #include "libertify_plugin.h"
 
-
-
-
 static void set_assets_ui(ethQueryContractUI_t *msg, context_t *context)
 {
     strlcpy(msg->title, "Assets", msg->titleLength);
