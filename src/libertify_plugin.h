@@ -17,7 +17,7 @@
 // Enumeration of the different selectors possible.
 // Should follow the exact same order as the array declared in main.c
 // EDIT THIS: Change the naming (`selector_t`), and add your selector names.
-typedef enum { DEPOSIT_ETH = 0, REDEEM_ETH, DEPOSIT } selector_t;
+typedef enum {DEPOSIT=0 } selector_t;
 
 // Enumeration used to parse the smart contract data.
 // EDIT THIS: Adapt the parameter names here.
@@ -30,23 +30,6 @@ typedef enum {
     DATA_OFFSET,
     DATA_LENGTH,
 
-    // Function: depositEth(address receiver,bytes data)
-    RECEIVER,
-    // DATA_OFFSET,
-    // DATA_LENGTH,
-
-    // Function: redeemEth(uint256 shares,address receiver,address _owner,bytes data)
-    SHARES,
-    // RECEIVER,
-    OWNER,
-    // DATA_OFFSET,
-    // DATA_LENGTH,
-
-    // Function: deposit(uint256 assets,address receiver,bytes data)
-    // ASSETS,
-    // RECEIVER,
-    // DATA_OFFSET,
-    // DATA_LENGTH,
 
     UNEXPECTED_PARAMETER,
 } parameter;
@@ -65,8 +48,6 @@ typedef struct context_t {
         uint8_t assets[INT256_LENGTH];
     };
 
-    uint8_t receiver[ADDRESS_LENGTH];
-    uint8_t owner[ADDRESS_LENGTH];
 
     char ticker[MAX_TICKER_LEN];
     uint8_t decimals;

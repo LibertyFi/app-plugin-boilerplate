@@ -58,10 +58,6 @@ nano_models.forEach(function(model) {
     vault, token, assets, []
     );
 
-    //console.log(`contract=${contractAddr}`)
-    //console.log(data);
-
-//console.log(data);
 
   // Get the generic transaction template
   let unsignedTx = genericTx;
