@@ -23,10 +23,17 @@ typedef enum { DEPOSIT_ETH = 0, REDEEM_ETH, DEPOSIT } selector_t;
 // EDIT THIS: Adapt the parameter names here.
 typedef enum {
 
-    // Function: depositEth(address receiver,bytes data)
-    RECEIVER = 0,
+    // Function: deposit(address vault,address token,uint256 assets,bytes data)
+    VAULT = 0,
+    TOKEN,
+    ASSETS,
     DATA_OFFSET,
     DATA_LENGTH,
+
+    // Function: depositEth(address receiver,bytes data)
+    RECEIVER,
+    // DATA_OFFSET,
+    // DATA_LENGTH,
 
     // Function: redeemEth(uint256 shares,address receiver,address _owner,bytes data)
     SHARES,
@@ -36,7 +43,7 @@ typedef enum {
     // DATA_LENGTH,
 
     // Function: deposit(uint256 assets,address receiver,bytes data)
-    ASSETS,
+    // ASSETS,
     // RECEIVER,
     // DATA_OFFSET,
     // DATA_LENGTH,

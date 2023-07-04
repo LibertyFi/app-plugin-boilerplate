@@ -48,14 +48,14 @@ void handle_init_contract(void *parameters)
     // EDIT THIS: Adapt the `cases`, and set the `next_param` to be the first
     // parameter you expect to parse.
     switch (context->selectorIndex) {
+        case DEPOSIT:
+            context->next_param = VAULT;
+            break;
         case DEPOSIT_ETH:
             context->next_param = RECEIVER;
             break;
         case REDEEM_ETH:
             context->next_param = SHARES;
-            break;
-        case DEPOSIT:
-            context->next_param = ASSETS;
             break;
         // Keep this
         default:

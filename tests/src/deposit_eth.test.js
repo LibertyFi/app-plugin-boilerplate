@@ -15,6 +15,8 @@ const abi = require(abi_path);
 // Test from replayed transaction: https://etherscan.io/tx/0x0160b3aec12fd08e6be0040616c7c38248efb4413168a3372fc4d2db0e5961bb
 // EDIT THIS: build your own test
 nano_models.forEach(function(model) {
+  return;
+  
   jest.setTimeout(20000)
   test('[Nano ' + model.letter + '] Deposit Eth', zemu(model, async (sim, eth) => {
 

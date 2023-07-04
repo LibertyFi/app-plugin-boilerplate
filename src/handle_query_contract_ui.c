@@ -110,6 +110,20 @@ void handle_query_contract_ui(void *parameters)
     msg->result = ETH_PLUGIN_RESULT_OK;
 
     switch (context->selectorIndex) {
+        case DEPOSIT:
+            switch (msg->screenIndex) {
+                case 0:
+                    set_assets_ui(msg, context);
+                    break;
+                /* case 1:
+                    set_address_ui(msg, context->receiver, "Receiver");
+                    break; */
+                default:
+                    PRINTF("Received an invalid screenIndex\n");
+                    msg->result = ETH_PLUGIN_RESULT_ERROR;
+                    return;
+            }
+            break;
         case DEPOSIT_ETH:
             switch (msg->screenIndex) {
                 case 0:
@@ -137,20 +151,6 @@ void handle_query_contract_ui(void *parameters)
                 case 2:
                     // set_owner_ui(msg, context);
                     set_address_ui(msg, context->owner, "Owner");
-                    break;
-                default:
-                    PRINTF("Received an invalid screenIndex\n");
-                    msg->result = ETH_PLUGIN_RESULT_ERROR;
-                    return;
-            }
-            break;
-        case DEPOSIT:
-            switch (msg->screenIndex) {
-                case 0:
-                    set_assets_ui(msg, context);
-                    break;
-                case 1:
-                    set_address_ui(msg, context->receiver, "Receiver");
                     break;
                 default:
                     PRINTF("Received an invalid screenIndex\n");

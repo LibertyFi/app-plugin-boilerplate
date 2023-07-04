@@ -1,0 +1,17 @@
+
+{
+	"chainId": 137,
+	"contracts": [{
+			"address": "0xb19d68cc120c5139bb83e3b8c11cb4d421eea98d",
+			"contractName": "LibertiV1ProxyLedger",
+			"selectors": {
+				"0xe9c670ad": {
+					"erc20OfInterest": [],
+					"method": "deposit",
+					"plugin": "Libertify"
+				}
+			}
+		}
+	],
+	"name": "Libertify"
+}

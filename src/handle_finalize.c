@@ -8,6 +8,12 @@ void handle_finalize(void *parameters)
     msg->uiType = ETH_UI_TYPE_GENERIC;
 
     switch (context->selectorIndex) {
+        case DEPOSIT:
+            msg->numScreens = 1;
+            /* if (memcmp(msg->address, context->receiver, ADDRESS_LENGTH) != 0) {
+                msg->numScreens++;
+            } */
+            break;
         case DEPOSIT_ETH:
             // EDIT THIS: Set the total number of screen you will need.
             msg->numScreens = 1;
@@ -28,12 +34,6 @@ void handle_finalize(void *parameters)
             /* if (memcmp(msg->address, context->owner, ADDRESS_LENGTH) != 0) { */
             /*     msg->numScreens++; */
             /* } */
-            break;
-        case DEPOSIT:
-            msg->numScreens = 1;
-            if (memcmp(msg->address, context->receiver, ADDRESS_LENGTH) != 0) {
-                msg->numScreens++;
-            }
             break;
         default:
             PRINTF("Selector index: %d not supported\n", context->selectorIndex);

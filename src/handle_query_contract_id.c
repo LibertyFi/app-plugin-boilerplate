@@ -14,16 +14,16 @@ void handle_query_contract_id(void *parameters)
     // EDIT THIS: Adapt the cases by modifying the strings you pass to `strlcpy`.
 
     switch (context->selectorIndex) {
+        case DEPOSIT:
+            strlcpy(msg->version, "Deposit", msg->versionLength);
+            msg->result = ETH_PLUGIN_RESULT_OK;
+            break;
         case DEPOSIT_ETH:
             strlcpy(msg->version, "Deposit Eth", msg->versionLength);
             msg->result = ETH_PLUGIN_RESULT_OK;
             break;
         case REDEEM_ETH:
             strlcpy(msg->version, "Redeem Eth", msg->versionLength);
-            msg->result = ETH_PLUGIN_RESULT_OK;
-            break;
-        case DEPOSIT:
-            strlcpy(msg->version, "Deposit", msg->versionLength);
             msg->result = ETH_PLUGIN_RESULT_OK;
             break;
         default:

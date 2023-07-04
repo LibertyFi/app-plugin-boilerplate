@@ -1,5 +1,40 @@
 #include "libertify_plugin.h"
 
+static void handle_deposit(ethPluginProvideParameter_t *msg, context_t *context)
+{
+    if (context->go_to_offset) {
+        if (msg->parameterOffset != context->offset + SELECTOR_SIZE) {
+            return;
+        }
+        context->go_to_offset = false;
+    }
+    switch (context->next_param) {
+        case VAULT:
+            // copy_parameter(context->assets, msg->parameter, sizeof(context->assets));
+            context->next_param = TOKEN;
+            break;
+        case TOKEN:
+            // copy_address(context->receiver, msg->parameter, sizeof(context->receiver));
+            context->next_param = ASSETS;
+            break;
+        case ASSETS:
+             copy_parameter(context->assets, msg->parameter, sizeof(context->assets));
+            context->next_param = DATA_OFFSET;
+            break;
+        case DATA_OFFSET:
+            context->next_param = DATA_LENGTH;
+            break;
+        case DATA_LENGTH:
+            context->next_param = UNEXPECTED_PARAMETER;
+            break;
+        default:
+            PRINTF("Param not supported: %d\n", context->next_param);
+            msg->result = ETH_PLUGIN_RESULT_ERROR;
+            break;
+    }
+}
+
+
 static void handle_deposit_eth(ethPluginProvideParameter_t *msg, context_t *context)
 {
     if (context->go_to_offset) {
@@ -62,35 +97,6 @@ static void handle_redeem_eth(ethPluginProvideParameter_t *msg, context_t *conte
     }
 }
 
-static void handle_deposit(ethPluginProvideParameter_t *msg, context_t *context)
-{
-    if (context->go_to_offset) {
-        if (msg->parameterOffset != context->offset + SELECTOR_SIZE) {
-            return;
-        }
-        context->go_to_offset = false;
-    }
-    switch (context->next_param) {
-        case ASSETS:
-            copy_parameter(context->assets, msg->parameter, sizeof(context->assets));
-            context->next_param = RECEIVER;
-            break;
-        case RECEIVER:
-            copy_address(context->receiver, msg->parameter, sizeof(context->receiver));
-            context->next_param = DATA_OFFSET;
-            break;
-        case DATA_OFFSET:
-            context->next_param = DATA_LENGTH;
-            break;
-        case DATA_LENGTH:
-            context->next_param = UNEXPECTED_PARAMETER;
-            break;
-        default:
-            PRINTF("Param not supported: %d\n", context->next_param);
-            msg->result = ETH_PLUGIN_RESULT_ERROR;
-            break;
-    }
-}
 
 void handle_provide_parameter(void *parameters)
 {
