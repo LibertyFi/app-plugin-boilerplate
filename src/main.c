@@ -38,6 +38,8 @@ const uint32_t BOILERPLATE_SELECTORS[NUM_SELECTORS] = {
 // Function to dispatch calls from the ethereum app.
 void dispatch_plugin_calls(int message, void *parameters)
 {
+    PRINTF("-- GOOD GOOD\n");
+
     switch (message) {
         case ETH_PLUGIN_INIT_CONTRACT:
             handle_init_contract(parameters);

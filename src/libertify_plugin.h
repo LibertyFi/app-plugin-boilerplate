@@ -47,6 +47,10 @@ typedef struct context_t {
         uint8_t assets[INT256_LENGTH];
     };
 
+    union {
+        uint8_t token[ADDRESS_LENGTH];
+    };
+
     char ticker[MAX_TICKER_LEN];
     uint8_t decimals;
     uint8_t token_found;

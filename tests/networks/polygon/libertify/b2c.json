@@ -6,7 +6,9 @@
 			"contractName": "LibertiV1ProxyLedger",
 			"selectors": {
 				"0xe9c670ad": {
-					"erc20OfInterest": [],
+					"erc20OfInterest": [
+							"token"
+					],
 					"method": "deposit",
 					"plugin": "Libertify"
 				}

@@ -47,8 +47,9 @@ nano_models.forEach(function(model) {
   const contract = new ethers.Contract(contractAddr, abi);
 
   const vault = "0x489c3bCE166b907355CcadEC2c8B90BB879c22C6";
-    const token = "0xB5C064F955D8e7F38fE0460C556a72987494eE17";
-    const assets = parseEther('10');
+    //const token = "0xB5C064F955D8e7F38fE0460C556a72987494eE17";
+    const token = "0x1BFD67037B42Cf73acF2047067bd4F2C47D9BfD6"; // WBTC
+    const assets = parseEther('10.1');
 
   // EDIT THIS: adapt the signature to your method
   // signature: swapExactETHForTokens(uint amountOutMin, address[] calldata path, address to, uint deadline)

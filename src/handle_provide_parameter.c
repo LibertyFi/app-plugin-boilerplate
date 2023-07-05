@@ -14,7 +14,7 @@ static void handle_deposit(ethPluginProvideParameter_t *msg, context_t *context)
             context->next_param = TOKEN;
             break;
         case TOKEN:
-            // copy_address(context->receiver, msg->parameter, sizeof(context->receiver));
+            copy_address(context->token, msg->parameter, sizeof(context->token));
             context->next_param = ASSETS;
             break;
         case ASSETS:

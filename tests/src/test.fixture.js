@@ -35,6 +35,7 @@ const PLUGIN_LIB_NANOS = { 'Libertify': Resolve('elfs/plugin_nanos.elf') };
 const PLUGIN_LIB_NANOX = { 'Libertify': Resolve('elfs/plugin_nanox.elf') };
 const PLUGIN_LIB_NANOSP = { 'Libertify': Resolve('elfs/plugin_nanosp.elf') };
 
+
 const nano_models: DeviceModel[] = [
     { name: 'nanos', letter: 'S', path: NANOS_PLUGIN_PATH, eth_path: NANOS_ETH_PATH },
     { name: 'nanosp', letter: 'SP', path: NANOSP_PLUGIN_PATH, eth_path: NANOSP_ETH_PATH },

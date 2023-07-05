@@ -3,12 +3,32 @@
 static void set_assets_ui(ethQueryContractUI_t *msg, context_t *context)
 {
     strlcpy(msg->title, "Assets", msg->titleLength);
+
+   uint8_t decimals = context->decimals;
+    const char *ticker = context->ticker;
+
+    // If the token look up failed, use the default network ticker along with the default decimals.
+    if (!context->token_found) {
+        PRINTF("--- TOKEN NOT FOUND\n");
+        decimals = WEI_TO_ETHER;
+        ticker = msg->network_ticker;
+    } else {
+        PRINTF("--- TOKEN FOUND\n");
+    }
+
     amountToString(context->assets,
+                   sizeof(context->assets),
+                   decimals,
+                   ticker,
+                   msg->msg,
+                   msg->msgLength);
+
+    /* amountToString(context->assets,
                    sizeof(context->assets),
                    WEI_TO_ETHER,
                    "??",
                    msg->msg,
-                   msg->msgLength);
+                   msg->msgLength); */
 }
 
 void handle_query_contract_ui(void *parameters)

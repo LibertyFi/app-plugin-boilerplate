@@ -16,9 +16,10 @@ void handle_finalize(void *parameters)
             msg->result = ETH_PLUGIN_RESULT_ERROR;
     }
 
-    // EDIT THIS: set `tokenLookup1` (and maybe `tokenLookup2`) to point to
+// EDIT THIS: set `tokenLookup1` (and maybe `tokenLookup2`) to point to
     // token addresses you will info for (such as decimals, ticker...).
-    // msg->tokenLookup1 = context->token_deposited;
+    msg->tokenLookup1 = context->token;
+    
 
     msg->result = ETH_PLUGIN_RESULT_OK;
 }
